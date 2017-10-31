@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
 const {ShoppingList} = require('./models');
+const {Recipes} = require('./models');
 
 const jsonParser = bodyParser.json();
 const app = express();
@@ -14,7 +15,7 @@ app.use(morgan('common'));
 
 // we're going to add some items to ShoppingList
 // so there's some data to look at
-ShoppingList.create('beans', 2);
+ShoppingList.create('courgette', 2);
 ShoppingList.create('tomatoes', 3);
 ShoppingList.create('peppers', 4);
 
@@ -22,6 +23,15 @@ ShoppingList.create('peppers', 4);
 // all current ShoppingList items
 app.get('/shopping-list', (req, res) => {
   res.json(ShoppingList.get());
+});
+
+
+Recipes.create('beef','burger');
+Recipes.create('chicken','salad');
+Recipes.create('lamb','kofta');
+
+app.get('/recipes', (req, res) => {
+	res.json(Recipes.get());
 });
 
 app.listen(process.env.PORT || 8080, () => {
